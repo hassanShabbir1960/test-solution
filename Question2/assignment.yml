@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    my_action: "{{ my_action | default('verify_install') }}"  # setting a default value
+  tasks:
+    - name: Verify and install apache2 (httpd in Ubuntu)
+      when: my_action == "verify_install"
+      block:
+        - name: Check if apache2 is installed
+          command:
+            cmd: dpkg -l | grep apache2
+          register: apache2_check
+          ignore_errors: yes
+          delegate_to: "{{ item }}"
+          with_items: "{{ groups['webserver'] }}"
+        
+        - name: Install apache2 if not installed
+          command:
+            cmd: apt-get install -y apache2
+          when: apache2_check.rc != 0
+          become: yes
+
+    - name: Check disk space
+      shell: df -h | awk '$5 > 80 {print $0}'
+      register: disk_output
+      changed_when: false
+      when: my_action == "check-disk"
+
+   
+
+- hosts: localhost
+  tasks:
+    - name: Check service status
+      when: my_action == "check-status"
+      uri:
+        url: "http://localhost:5001/healthcheck"
+        method: GET
+      register: service_status
+
+    - name: Debug
+      debug:
+        var: service_status.json

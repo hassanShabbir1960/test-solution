@@ -1,0 +1,8 @@
+[webserver]
+localhost ansible_connection=local
+
+[rabbitmq]
+localhost ansible_connection=local
+
+[postgresql]
+localhost ansible_connection=local
