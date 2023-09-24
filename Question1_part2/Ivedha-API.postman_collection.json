@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "4e4bbf76-017c-4da1-9971-c7e30cd81773",
+		"name": "Ivedha-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insert payload into Elasticsearch",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Return the all Application status",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Return the specific Application status (“UP” or “DOWN”)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
